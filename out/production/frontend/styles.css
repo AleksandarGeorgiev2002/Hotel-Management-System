@@ -1,0 +1,91 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6; 
+  }
+  
+  
+  .room-details-container {
+    min-height: 100vh;
+    background-color: #f3f4f6; 
+    padding: 5rem 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .room-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  
+  .room-card img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+  
+  .room-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #1e3a8a; 
+    margin-bottom: 2rem;
+  }
+  
+  .room-subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4b5563; 
+    margin-bottom: 2.5rem;
+  }
+  
+  .room-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .room-details-list li {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .room-details-list li strong {
+    font-weight: bold;
+  }
+  
+  .room-price {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1e3a8a; /* Matches text-blue-800 */
+    margin-top: 2.5rem;
+  }
+  
+  .book-now-button {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb; /* Matches bg-blue-600 */
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .book-now-button:hover {
+    background-color: #1d4ed8; /* Matches hover:bg-blue-700 */
+  }
