@@ -19,7 +19,7 @@ const RoomDetails = () => {
       wifi: 'Free wifi included',
       breakfast: 'Included',
       guests: 'Maximum number of guests: 2 adults',
-      price: 'From €150 / room / night',
+      price: 'From €100 / room / night',
     },
     'luxury-room': {
       image: luxuryRoom,
@@ -29,7 +29,7 @@ const RoomDetails = () => {
       breakfast: 'Included',
       dinner: 'Included',
       guests: 'Maximum number of guests: 4 adults',
-      price: 'From €250 / room / night',
+      price: 'From €150 / room / night',
     },
     'vip-room': {
       image: vipRoom,
@@ -39,7 +39,7 @@ const RoomDetails = () => {
       breakfast: 'Included',
       dinner: 'Included',
       guests: 'Maximum number of guests: 4 adults',
-      price: 'From €400 / room / night',
+      price: 'From €250 / room / night',
     },
   };
 

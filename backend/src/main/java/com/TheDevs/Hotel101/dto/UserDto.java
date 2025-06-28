@@ -1,9 +1,7 @@
 package com.TheDevs.Hotel101.dto;
 
 import com.TheDevs.Hotel101.enums.Role;
-import lombok.Data;
 
-@Data
 public class UserDto {
     private Long id;
     private String firstName;

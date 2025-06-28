@@ -19,12 +19,12 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public List<Room> getAvailableRooms(){
+    public List<Room> getAvailableRooms() {
         List<Room> availableRooms = roomRepository.findAllByStatus(RoomStatus.AVAILABLE);
         return availableRooms.isEmpty() ? List.of() : availableRooms;
     }
 
-    public List<Room> getAllRooms(){
+    public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
 
@@ -50,7 +50,7 @@ public class RoomService {
             room.setLastCleanedAt(LocalDateTime.now());
             room.setCreatedAt(LocalDateTime.now());
             room.setUpdatedAt(LocalDateTime.now());
-        return room;
+            return room;
         }).toList();
         roomRepository.saveAll(rooms);
     }

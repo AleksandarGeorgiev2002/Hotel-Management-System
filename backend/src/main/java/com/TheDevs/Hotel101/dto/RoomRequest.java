@@ -1,12 +1,10 @@
 package com.TheDevs.Hotel101.dto;
 
 import com.TheDevs.Hotel101.enums.RoomStatus;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
 public class RoomRequest {
     private Long roomNumber;
     private RoomStatus status;

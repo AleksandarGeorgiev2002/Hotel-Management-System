@@ -1,7 +1,6 @@
 package com.TheDevs.Hotel101.controller;
 
 import com.TheDevs.Hotel101.dto.RoomResponse;
-
 import com.TheDevs.Hotel101.model.Room;
 import com.TheDevs.Hotel101.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;

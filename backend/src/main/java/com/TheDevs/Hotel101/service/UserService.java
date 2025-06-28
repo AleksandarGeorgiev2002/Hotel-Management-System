@@ -1,6 +1,5 @@
 package com.TheDevs.Hotel101.service;
 
-
 import com.TheDevs.Hotel101.dto.UserDto;
 import com.TheDevs.Hotel101.exceptions.UserAlreadyExistsException;
 import com.TheDevs.Hotel101.model.User;

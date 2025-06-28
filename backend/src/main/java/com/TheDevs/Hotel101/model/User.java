@@ -3,7 +3,6 @@ package com.TheDevs.Hotel101.model;
 import com.TheDevs.Hotel101.enums.Role;
 import com.TheDevs.Hotel101.exceptions.EmailNotValidException;
 import jakarta.persistence.*;
-import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,39 +13,67 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails { // 1. implement the UserDetails interface
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String firstName;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String lastName;
 
-    @Getter
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Getter
-    @Setter
     @Column(nullable = false)
     private String password;
 
-    @Getter
-    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -62,17 +89,6 @@ public class User implements UserDetails { // 1. implement the UserDetails inter
     public String getUsername() {
         return email;
     }
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-
-//    public String getRole() {
-//        return role.toString();
-//    }
 
     public void setEmail(String email) {
         if (isValidEmail(email)) {

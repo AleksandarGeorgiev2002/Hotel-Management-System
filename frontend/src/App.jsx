@@ -8,6 +8,7 @@ import Booking from './pages/Booking';
 import './styles.css';
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
+import UserDashboard from "./pages/dashboards/UserDashboard.jsx";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/:typeOfRoom/booking" element={<Booking />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<UserDashboard />} />
       </Routes>
     </Router>
   );

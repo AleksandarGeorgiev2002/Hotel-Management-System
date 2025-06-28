@@ -2,17 +2,12 @@ package com.TheDevs.Hotel101.model;
 
 import com.TheDevs.Hotel101.enums.RoomStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name = "rooms")
 public class Room {
     @Id
@@ -23,34 +18,34 @@ public class Room {
     private Long roomNumber;
 
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private RoomStatus status;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private String type;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private BigDecimal pricePerNight;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private Integer maxGuests;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private Integer bedCount;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private String description;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private String image_URL;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private LocalDateTime lastCleanedAt;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
