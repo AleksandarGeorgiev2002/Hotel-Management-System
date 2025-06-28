@@ -124,4 +124,8 @@ This project is licensed under the MIT License.
 
 For questions or support, open an issue or contact me at [AleksandarGeorgiev2002](https://github.com/AleksandarGeorgiev2002).
 
+<<<<<<< HEAD
 ---
+=======
+---
+>>>>>>> f8ea75f5d9259652b6287aacdc798a437cb462f3
