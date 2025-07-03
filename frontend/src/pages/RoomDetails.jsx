@@ -1,13 +1,13 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaBed, FaWifi, FaUtensils, FaUsers, FaBinoculars } from 'react-icons/fa';
 import standardRoom from '../assets/standard_room.jpg';
 import luxuryRoom from '../assets/luxury_room.jpg';
 import vipRoom from '../assets/vip_room.jpg';
 
 const RoomDetails = () => {
-  const { typeOfRoom } = useParams(); // Get the room type from the URL
-  const navigate = useNavigate(); // Initialize useNavigate
+  const { typeOfRoom } = useParams();
+  const navigate = useNavigate();
 
   const normalizedTypeOfRoom = typeOfRoom.toLowerCase();
 
@@ -43,7 +43,7 @@ const RoomDetails = () => {
     },
   };
 
-  const details = roomDetails[normalizedTypeOfRoom]; // Use the normalized type for lookup
+  const details = roomDetails[normalizedTypeOfRoom];
 
   if (!details) {
     return <div className="text-center mt-10">Room type not found.</div>;
@@ -52,7 +52,6 @@ const RoomDetails = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-20 px-16 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg p-12 flex flex-col md:flex-row gap-16">
-        {/* Room Image */}
         <div className="flex-shrink-0">
           <img
             src={details.image}
@@ -60,7 +59,6 @@ const RoomDetails = () => {
             className="w-full md:w-[600px] h-auto object-cover rounded-lg"
           />
         </div>
-        {/* Room Details */}
         <div className="flex-1">
           <h1 className="text-6xl font-bold text-blue-800 mb-8">
             {typeOfRoom
@@ -87,10 +85,9 @@ const RoomDetails = () => {
             <li><FaUsers className="inline-block text-blue-600 mr-4 text-3xl" /> <strong>Guests:</strong> {details.guests}</li>
           </ul>
           <p className="text-3xl font-semibold text-blue-800 mt-10">{details.price}</p>
-          {/* Book Now Button */}
           <button
             className="mt-8 px-6 py-3 bg-blue-600 text-white text-xl font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-            onClick={() => navigate(`/${typeOfRoom}/booking`)} // Navigate to Booking Page
+            onClick={() => navigate(`/${typeOfRoom}/booking`)}
           >
             Book Now
           </button>

@@ -14,23 +14,18 @@ const Home = () => {
                         backgroundImage: `url(${hotel_lobby})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
-                        filter: 'brightness(0.5)', // Apply brightness only to the background
+                        filter: 'brightness(0.5)',
                     }}
                 />
-                {/* Content */}
                 <div className="z-10 text-center px-4">
                     <h1 className="text-5xl font-bold mb-4">Welcome to Hotel 101</h1>
                     <p className="text-xl">Experience tranquility, luxury, and nature in perfect harmony.</p>
                 </div>
             </section>
-
-            {/* Calendar Section */}
             <section className="py-8 px-5 md:px-20 bg-gray-100 mt-10">
                 <h2 className="text-3xl font-semibold mb-8 text-gray-800 text-center">Book Your Stay</h2>
                 <Calendar />
             </section>
-
-            {/* About Section */}
             <section className="py-16 px-4 md:px-20 text-center bg-gray-100">
                 <h2 className="text-3xl font-semibold mb-8 text-gray-800">Why Choose Us</h2>
                 <div className="grid gap-8 md:grid-cols-3">
@@ -48,7 +43,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
             <Footer />
         </div>
     );

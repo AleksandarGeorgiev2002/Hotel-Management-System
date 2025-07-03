@@ -1,14 +1,14 @@
 import React from "react";
 
 const UserDashboard = () => {
-    // Example logout handler
+
     const handleLogout = () => {
-        localStorage.removeItem("token"); // Remove JWT
-        window.location.href = "/login"; // Redirect to login page
+        localStorage.removeItem("token");
+        window.location.href = "/login";
     };
 
     return (
-        <div style={{ padding: "2rem" }}>
+        <div style={{padding: "2rem"}}>
             <h1>Welcome to your Dashboard!</h1>
             <p>You are successfully logged in.</p>
             <button onClick={handleLogout}>Logout</button>

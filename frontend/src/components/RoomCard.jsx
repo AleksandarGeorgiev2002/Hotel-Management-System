@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const RoomCard = ({ name, image, description, price }) => {
   const navigate = useNavigate();
 
-  // Function to capitalize the first letter of each word
   const capitalizeWords = (str) => {
     return str
       .toLowerCase()
@@ -14,8 +13,7 @@ const RoomCard = ({ name, image, description, price }) => {
   };
 
   const handleBookNow = () => {
-    // Normalize the route by replacing spaces with hyphens and converting to lowercase
-    const route = name.toLowerCase().replace(/\s+/g, '-'); // Convert "VIP Room" -> "vip-room"
+    const route = name.toLowerCase().replace(/\s+/g, '-');
     navigate(`/${route}`);
   };
 

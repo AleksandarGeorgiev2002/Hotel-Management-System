@@ -10,7 +10,6 @@ const Booking = () => {
     vip_room: 250,
   };
 
-  // Normalize typeOfRoom to match the keys in roomPrices
   const normalizedTypeOfRoom = typeOfRoom.replace('-', '_');
   const pricePerNight = roomPrices[normalizedTypeOfRoom] || 0;
 
@@ -24,7 +23,7 @@ const Booking = () => {
   });
 
   const [totalPrice, setTotalPrice] = useState(0);
-  const [daysOfStay, setDaysOfStay] = useState(0); // New state for days of stay
+  const [daysOfStay, setDaysOfStay] = useState(0);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,13 +34,13 @@ const Booking = () => {
     const checkOutDate = new Date(formData.checkOutDate);
     const timeDifference = checkOutDate - checkInDate;
     const days = timeDifference > 0 ? timeDifference / (1000 * 60 * 60 * 24) : 0;
-    setDaysOfStay(days); // Update state with the number of days
+    setDaysOfStay(days);
     return days * pricePerNight;
   };
 
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
-  }, [formData.checkInDate, formData.checkOutDate, pricePerNight]); // Include pricePerNight in dependencies
+  }, [formData.checkInDate, formData.checkOutDate, pricePerNight]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,15 +55,11 @@ const Booking = () => {
       <div className="min-h-screen bg-gray-100 py-10 px-6">
         <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
           <h1 className="text-3xl font-bold text-blue-800 mb-6 text-center">Booking</h1>
-
-          {/* Room Details */}
           <div className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-800">Room Details</h2>
             <p className="text-gray-600">Room Type: {typeOfRoom.replace('-', ' ')}</p>
             <p className="text-gray-600">Price: €{pricePerNight} / night</p>
           </div>
-
-          {/* Booking Form */}
           <form onSubmit={handleSubmit}>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Your Details</h2>
             <div className="mb-4">
@@ -100,8 +95,6 @@ const Booking = () => {
                   placeholder="Enter your phone number"
               />
             </div>
-
-            {/* Booking Details */}
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Booking Details</h2>
             <div className="mb-4">
               <label className="block text-gray-700 font-bold mb-2">Check-In Date</label>
@@ -135,16 +128,12 @@ const Booking = () => {
                   min="1"
               />
             </div>
-
-            {/* Price Summary */}
             <div className="mb-6">
               <h2 className="text-2xl font-semibold text-gray-800">Price Summary</h2>
               <p className="text-gray-600">
                 Total: €{totalPrice} ({daysOfStay} {daysOfStay === 1 ? 'night' : 'nights'})
               </p>
             </div>
-
-            {/* Confirm Button */}
             <button
                 type="submit"
                 className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
@@ -158,4 +147,3 @@ const Booking = () => {
 };
 
 export default Booking;
-

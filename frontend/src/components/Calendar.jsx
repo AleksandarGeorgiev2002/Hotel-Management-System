@@ -1,75 +1,82 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './datepicker-override.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Calendar = () => {
-    const [arrivalDate, setArrivalDate] = useState(null);
-    const [departureDate, setDepartureDate] = useState(null);
-
-    // Initialize clientMinDate directly to today's date at midnight.
-    // Use a function for useState initial value to ensure it only runs once.
+    const [checkInDate, setCheckInDate] = useState(null);
+    const [checkOutDate, setCheckOutDate] = useState(null);
     const [clientMinDate] = useState(() => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to midnight for consistent date comparison
+        today.setHours(0, 0, 0, 0);
         return today;
     });
-
     const [adults, setAdults] = useState(1);
     const [children, setChildren] = useState(0);
-
-    const [filteredRooms, setFilteredRooms] = useState([]); // Store filtered rooms
-
-    // Define some dummy room data to be used instead of fetching from an API
-    const dummyRooms = [
-        { id: 1, name: 'Standard King Room', max_guests: 2 },
-        { id: 2, name: 'Deluxe Queen Room', max_guests: 3 },
-        { id: 3, name: 'Executive Suite', max_guests: 4 },
-        { id: 4, name: 'Presidential Penthouse', max_guests: 6 },
-    ];
-
-    const handleArrivalChange = (date) => {
-        setArrivalDate(date);
-        // Reset departure date if it becomes invalid (before or same as arrival)
-        if (departureDate && date && date >= departureDate) {
-            setDepartureDate(null);
+    const [filteredRooms, setFilteredRooms] = useState([]);
+    const handleCheckInDateChange = (date) => {
+        setCheckInDate(date);
+        if (checkOutDate && date && date >= checkOutDate) {
+            setCheckOutDate(null);
         }
     };
-
-    const minDepartureDate = () => {
+    const minCheckOutDate = () => {
         let calculatedMinDate = new Date(clientMinDate.getTime());
 
-        if (arrivalDate) {
-            const dayAfterArrival = new Date(arrivalDate.getTime());
-            dayAfterArrival.setDate(dayAfterArrival.getDate() + 1);
-            dayAfterArrival.setHours(0, 0, 0, 0); // Ensure comparison is at midnight
+        if (checkInDate) {
+            const dayAfterCheckIn = new Date(checkInDate.getTime());
+            dayAfterCheckIn.setDate(dayAfterCheckIn.getDate() + 1);
+            dayAfterCheckIn.setHours(0, 0, 0, 0);
 
-            // If the day after arrival is later than today, use it as min departure
-            if (dayAfterArrival > clientMinDate) {
-                calculatedMinDate = dayAfterArrival;
+            if (dayAfterCheckIn > clientMinDate) {
+                calculatedMinDate = dayAfterCheckIn;
             } else {
-                // Otherwise, use today's date if arrival is today or in the past
                 calculatedMinDate = clientMinDate;
             }
         }
         return calculatedMinDate;
     };
-
-    // handleFilter now uses dummyRooms directly
-    const handleFilter = () => {
-        if (!arrivalDate || !departureDate) {
-            setFilteredRooms([]); // Clear previous results if dates are incomplete
+    const navigate = useNavigate();
+    const handleFilter = async () => {
+        if (!checkInDate || !checkOutDate) {
+            setFilteredRooms([]);
+            alert('Please select both arrival and departure dates.');
             return;
         }
 
-        const totalGuests = adults + children;
+        try {
+            const params = new URLSearchParams({
+                checkInDate: checkInDate.toISOString().split('T')[0],
+                checkOutDate: checkOutDate.toISOString().split('T')[0],
+                adults: adults.toString(),
+                children: children.toString()
+            }).toString();
 
-        // Filter dummyRooms based on max_guests
-        const availableRooms = dummyRooms.filter((room) => room.max_guests >= totalGuests);
+            const response = await fetch(
+                `http://localhost:8080/api/rooms/filtered?${params}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'include'
+                }
+            );
 
-        setFilteredRooms(availableRooms);
+            if (!response.ok) {
+                throw new Error('Failed to fetch rooms');
+            }
+
+            const data = await response.json();
+            setFilteredRooms(data);
+            navigate('/rooms/filtered');
+        } catch (error) {
+            console.error('Error:', error);
+            setFilteredRooms([]);
+        }
     };
 
-    // Added a check for clientMinDate to ensure it's initialized before rendering DatePicker
     if (!clientMinDate) {
         return <div>Loading calendar...</div>;
     }
@@ -77,59 +84,55 @@ const Calendar = () => {
     return (
         <div
             className="flex flex-col mt-10 bg-gray-50 p-5 rounded-md shadow-md border border-gray-300 max-w-4xl mx-auto mb-0">
-            {/* Input Fields Row */}
             <div className="flex flex-wrap md:flex-row items-center justify-center gap-6 w-full">
-                {/* Arrival Date */}
                 <div className="flex flex-col">
                     <label className="block text-gray-700 font-medium mb-2 uppercase text-sm">
                         Arrival
                     </label>
                     <DatePicker
-                        selected={arrivalDate}
+                        selected={checkInDate}
                         onChange={(date) => {
-                            // Ensure date is a Date object, otherwise null
                             const newDate = date instanceof Date ? date : null;
-                            handleArrivalChange(newDate);
+                            handleCheckInDateChange(newDate);
                         }}
                         selectsStart
-                        startDate={arrivalDate}
-                        endDate={departureDate}
-                        dateFormat="dd/MM/yyyy" // Set date format to day/month/year
-                        minDate={clientMinDate} // Set minDate to today
-                        showMonthYearDropdown // Allows easy year/month navigation
+                        startDate={checkInDate}
+                        endDate={checkOutDate}
+                        dateFormat="dd/MM/yyyy"
+                        minDate={clientMinDate}
+                        showMonthYearDropdown
+                        formatMonthYear={() => ""}
                         className="border border-gray-150 rounded-md px-3 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholderText="Select date"
                     />
                 </div>
 
-                {/* Departure Date */}
                 <div className="flex flex-col">
                     <label className="block text-gray-700 font-medium mb-2 uppercase text-sm">
                         Departure
                     </label>
                     <DatePicker
-                        selected={departureDate}
+                        selected={checkOutDate}
                         onChange={(date) => {
-                            // Handle null date selection gracefully
                             if (date === null) {
-                                setDepartureDate(null);
+                                setCheckOutDate(null);
                                 return;
                             }
-                            setDepartureDate(new Date(date.getTime())); // Ensure a new Date object is set
+                            setCheckOutDate(new Date(date.getTime()));
                         }}
                         selectsEnd
-                        startDate={arrivalDate}
-                        endDate={departureDate}
+                        startDate={checkInDate}
+                        endDate={checkOutDate}
                         dateFormat="dd/MM/yyyy"
-                        minDate={minDepartureDate()} // Departure must be after arrival
-                        disabled={!arrivalDate} // Disable if arrival date is not selected
+                        minDate={minCheckOutDate()}
+                        disabled={!checkInDate}
                         showMonthYearDropdown
+                        formatMonthYear={() => ""}
                         className="border border-gray-150 rounded-md px-3 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholderText="Select date"
                     />
                 </div>
 
-                {/* Adults Input */}
                 <div className="flex flex-col">
                     <label className="block text-gray-700 font-medium mb-2 uppercase text-sm">
                         Adults
@@ -144,7 +147,6 @@ const Calendar = () => {
                     />
                 </div>
 
-                {/* Children Input */}
                 <div className="flex flex-col">
                     <label className="block text-gray-700 font-medium mb-2 uppercase text-sm">
                         Children
@@ -159,7 +161,6 @@ const Calendar = () => {
                     />
                 </div>
 
-                {/* Check Button */}
                 <div className="flex flex-col justify-end mt-6">
                     <button
                         onClick={handleFilter}
@@ -170,7 +171,6 @@ const Calendar = () => {
                 </div>
             </div>
 
-            {/* --- Display Results --- */}
             <div className="w-full text-center mt-8">
                 {filteredRooms.length > 0 && (
                     <div>
@@ -185,14 +185,12 @@ const Calendar = () => {
                     </div>
                 )}
 
-                {/* Message for no rooms available after filtering */}
-                {filteredRooms.length === 0 && arrivalDate && departureDate && (
-                    <h3 className="text-xl font-semibold text-red-500">
-                        No rooms available for the selected criteria.
-                    </h3>
-                )}
-                {/* Default message before any dates are selected */}
-                {filteredRooms.length === 0 && (!arrivalDate || !departureDate) && (
+                {/*{filteredRooms.length === 0 && arrivalDate && departureDate && (*/}
+                {/*    <h3 className="text-xl font-semibold text-red-500">*/}
+                {/*        No rooms available for the selected criteria.*/}
+                {/*    </h3>*/}
+                {/*)}*/}
+                {filteredRooms.length === 0 && (!checkInDate || !checkOutDate) && (
                     <p className="text-gray-500 text-lg">Select dates and guests to check availability.</p>
                 )}
             </div>

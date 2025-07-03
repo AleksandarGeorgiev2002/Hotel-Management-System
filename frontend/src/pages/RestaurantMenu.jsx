@@ -19,8 +19,8 @@ import pannaCotta from '../assets/dishes/Panna_cotta.jpg';
 import cheesecake from '../assets/dishes/cheesecake.jpg';
 
 const RestaurantMenu = () => {
-  const [flippedIndex, setFlippedIndex] = useState(null); // Track which card is flipped
-  const [orderCounts, setOrderCounts] = useState({}); // Track order counts for each item
+  const [flippedIndex, setFlippedIndex] = useState(null);
+  const [orderCounts, setOrderCounts] = useState({});
 
   const menuItems = [
     { name: 'Grilled Salmon', description: 'Freshly grilled salmon served with roasted vegetables.', price: '€25', image: grilledSalmon },
@@ -44,13 +44,13 @@ const RestaurantMenu = () => {
   ];
 
   const handleFlip = (index) => {
-    setFlippedIndex(flippedIndex === index ? null : index); // Toggle flip state
+    setFlippedIndex(flippedIndex === index ? null : index);
   };
 
   const handleOrder = (name) => {
     setOrderCounts((prevCounts) => ({
       ...prevCounts,
-      [name]: (prevCounts[name] || 0) + 1, // Increment order count
+      [name]: (prevCounts[name] || 0) + 1,
     }));
   };
 
@@ -64,16 +64,15 @@ const RestaurantMenu = () => {
             className="relative bg-white rounded-lg shadow hover:shadow-lg transition transform"
             style={{
               height: '350px',
-              perspective: '1000px', // Enable 3D perspective
+              perspective: '1000px',
             }}
             onClick={() => handleFlip(index)}
           >
-            {/* Front Side */}
             <div
               className={`absolute inset-0 backface-hidden transform ${flippedIndex === index ? 'rotate-y-180' : ''
                 }`}
               style={{
-                backfaceVisibility: 'hidden', // Ensure the front side is not visible when flipped
+                backfaceVisibility: 'hidden',
               }}
             >
               <img
@@ -87,27 +86,24 @@ const RestaurantMenu = () => {
                 <p className="text-lg font-semibold text-blue-800">{item.price}</p>
               </div>
             </div>
-
-            {/* Back Side */}
             <div
               className={`absolute inset-0 bg-blue-100 p-6 rounded-lg transform ${flippedIndex === index ? '' : 'rotate-y-180'
                 }`}
               style={{
-                backfaceVisibility: 'hidden', // Ensure the back side is not visible when not flipped
+                backfaceVisibility: 'hidden',
               }}
             >
               <h2 className="text-2xl font-bold text-gray-800 mb-4">{item.name}</h2>
               <p className="text-gray-600 mb-6">How many portions would you like?</p>
               <div className="flex items-center justify-between">
-                {/* Numeric Input Field */}
                 <input
                   type="number"
                   min="0"
                   value={orderCounts[item.name] || 0}
-                  onClick={(e) => e.stopPropagation()} // Prevent flipping when interacting with the input
+                  onClick={(e) => e.stopPropagation()}
                   onChange={(e) => {
                     let value = parseInt(e.target.value, 10) || 0;
-                    if (value > 100) value = 100; // Ensure the value does not exceed 999
+                    if (value > 100) value = 100;
                     setOrderCounts((prevCounts) => ({
                       ...prevCounts,
                       [item.name]: value,
@@ -115,15 +111,13 @@ const RestaurantMenu = () => {
                   }}
                   className="w-20 text-center border border-gray-300 rounded py-1"
                 />
-
-                {/* Order Button */}
                 <button
                   className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering flip
+                    e.stopPropagation();
                     setOrderCounts((prevCounts) => ({
                       ...prevCounts,
-                      [item.name]: 0, // Reset order count to 0
+                      [item.name]: 0,
                     }));
                   }}
                 >
